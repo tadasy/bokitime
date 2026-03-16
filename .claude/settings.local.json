@@ -4,7 +4,14 @@
       "WebSearch",
       "Bash(npm create:*)",
       "Bash(npm install:*)",
-      "Bash(npx:*)"
+      "Bash(npx:*)",
+      "Bash(ls:*)",
+      "Bash(npm ls:*)",
+      "Bash(npm run:*)",
+      "Bash(firebase:*)",
+      "Bash(firebase init:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
     ]
   }
 }
