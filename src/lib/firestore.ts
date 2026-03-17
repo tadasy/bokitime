@@ -138,7 +138,31 @@ export async function deleteSession(
   uid: string,
   sessionId: string,
 ): Promise<void> {
-  await deleteDoc(doc(sessionsRef(uid), sessionId));
+  const sessionRef = doc(sessionsRef(uid), sessionId);
+  const sessionSnap = await getDoc(sessionRef);
+  if (!sessionSnap.exists()) return;
+
+  const session = sessionSnap.data() as Omit<StudySession, "id">;
+  const batch = writeBatch(db);
+
+  batch.delete(sessionRef);
+
+  // Update dailyStats
+  const statsRef = doc(db, "users", uid, "dailyStats", session.date);
+  const statsSnap = await getDoc(statsRef);
+  if (statsSnap.exists()) {
+    const stats = statsSnap.data() as DailyStats;
+    if (stats.sessionCount <= 1) {
+      batch.delete(statsRef);
+    } else {
+      batch.update(statsRef, {
+        totalSeconds: increment(-session.durationSeconds),
+        sessionCount: increment(-1),
+      });
+    }
+  }
+
+  await batch.commit();
 }
 
 // --- Daily Stats ---
