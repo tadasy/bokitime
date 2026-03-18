@@ -18,8 +18,8 @@ export function Header() {
   });
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/95 pt-[env(safe-area-inset-top)] backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="mx-auto flex h-12 max-w-lg items-center justify-between px-4">
+    <header className="shrink-0 border-b bg-background/95 pt-[env(safe-area-inset-top)] backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="mx-auto flex h-12 max-w-lg items-center justify-between px-4 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))]">
         <h1 className="text-lg font-bold text-foreground">BokiTime</h1>
         {profile && profile.currentStreak > 0 && (
           <div className="flex items-center gap-1 rounded-full bg-orange-100 px-2.5 py-0.5 text-sm font-medium text-orange-700">
