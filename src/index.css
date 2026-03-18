@@ -36,16 +36,24 @@
     @apply border-border outline-ring/50;
   }
 
+  html {
+    @apply font-sans;
+    height: 100%;
+    overflow: hidden;
+  }
   body {
     @apply bg-background text-foreground;
     font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP",
       system-ui, sans-serif;
     margin: 0;
+    height: 100%;
+    overflow: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  html {
-    @apply font-sans;
+  #root {
+    height: 100%;
+    overflow: hidden;
   }
 }
 

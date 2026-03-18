@@ -20,7 +20,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-8 px-4">
+    <div className="flex h-full flex-col items-center justify-center gap-8 px-4">
       <div className="text-center">
         <h1 className="text-4xl font-bold text-foreground">BokiTime</h1>
         <p className="mt-2 text-muted-foreground">
