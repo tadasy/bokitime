@@ -6,7 +6,7 @@ import { BottomNav } from "@/components/layout/bottom-nav";
 export default function App() {
   return (
     <AuthGuard>
-      <div className="flex h-full flex-col bg-background">
+      <div className="flex h-[100dvh] flex-col bg-background">
         <Header />
         <main className="flex-1 overflow-y-auto overscroll-contain">
           <Outlet />
