@@ -8,6 +8,7 @@ import {
   subMonths,
   addWeeks,
   addMonths,
+  eachDayOfInterval,
   format,
 } from "date-fns";
 import { ja } from "date-fns/locale";
@@ -59,14 +60,16 @@ export default function StatsPage() {
 
   const totalSeconds = stats?.reduce((a, s) => a + s.totalSeconds, 0) ?? 0;
 
-  const barData = useMemo(
-    () =>
-      stats?.map((s) => ({
-        date: s.date.slice(5),
-        minutes: Math.round(s.totalSeconds / 60),
-      })) ?? [],
-    [stats],
-  );
+  const barData = useMemo(() => {
+    const byDate = new Map(stats?.map((s) => [s.date, s.totalSeconds]) ?? []);
+    return eachDayOfInterval({ start, end }).map((d) => {
+      const key = formatDate(d);
+      return {
+        date: key.slice(5),
+        minutes: Math.round((byDate.get(key) ?? 0) / 60),
+      };
+    });
+  }, [stats, start, end]);
 
   const prev = () => setOffset((o) => o - 1);
   const next = () => setOffset((o) => o + 1);
