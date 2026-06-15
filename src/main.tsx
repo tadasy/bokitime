@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useAuthListener } from "./hooks/use-auth";
-import App from "./app";
+import App from "./App";
 import LoginPage from "./routes/login";
 import TimerPage from "./routes/timer";
 import HistoryPage from "./routes/history";
