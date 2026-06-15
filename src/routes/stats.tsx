@@ -65,7 +65,7 @@ export default function StatsPage() {
     return eachDayOfInterval({ start, end }).map((d) => {
       const key = formatDate(d);
       return {
-        date: key.slice(5),
+        date: format(d, "M/d(E)", { locale: ja }),
         minutes: Math.round((byDate.get(key) ?? 0) / 60),
       };
     });
