@@ -190,6 +190,26 @@ export async function getDailyStatsRange(
   return snap.docs.map((d) => d.data() as DailyStats);
 }
 
+export interface AllTimeStats {
+  totalSeconds: number;
+  sessionCount: number;
+  dayCount: number;
+}
+
+export async function getAllTimeStats(uid: string): Promise<AllTimeStats> {
+  const snap = await getDocs(collection(db, "users", uid, "dailyStats"));
+  return snap.docs.reduce<AllTimeStats>(
+    (acc, d) => {
+      const stats = d.data() as DailyStats;
+      acc.totalSeconds += stats.totalSeconds;
+      acc.sessionCount += stats.sessionCount;
+      acc.dayCount += 1;
+      return acc;
+    },
+    { totalSeconds: 0, sessionCount: 0, dayCount: 0 },
+  );
+}
+
 // --- Goals ---
 
 function goalsRef(uid: string) {
