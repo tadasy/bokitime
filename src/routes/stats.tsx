@@ -23,7 +23,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useStatsRange } from "@/hooks/use-sessions";
+import { useStatsRange, useAllTimeStats } from "@/hooks/use-sessions";
 import { formatDuration, formatDate } from "@/lib/format";
 
 type Period = "weekly" | "monthly";
@@ -55,6 +55,7 @@ export default function StatsPage() {
   }, [period, offset]);
 
   const { data: stats } = useStatsRange(formatDate(start), formatDate(end));
+  const { data: allTime } = useAllTimeStats();
 
   const totalSeconds = stats?.reduce((a, s) => a + s.totalSeconds, 0) ?? 0;
 
@@ -72,7 +73,30 @@ export default function StatsPage() {
 
   return (
     <div className="mx-auto max-w-lg px-4 pb-24 pt-4">
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base">総勉強時間</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-3xl font-bold">
+            {formatDuration(allTime?.totalSeconds ?? 0)}
+          </p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            学習日数 {allTime?.dayCount ?? 0}日 ・ {allTime?.sessionCount ?? 0}回
+          </p>
+          <p className="text-sm text-muted-foreground">
+            1回あたり平均{" "}
+            {formatDuration(
+              allTime && allTime.sessionCount > 0
+                ? Math.round(allTime.totalSeconds / allTime.sessionCount)
+                : 0,
+            )}
+          </p>
+        </CardContent>
+      </Card>
+
       <Tabs
+        className="mt-4"
         value={period}
         onValueChange={(v) => {
           setPeriod(v as Period);

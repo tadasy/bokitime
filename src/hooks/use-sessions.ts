@@ -1,5 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { getSessionsByDateRange, getDailyStats, getDailyStatsRange } from "@/lib/firestore";
+import {
+  getSessionsByDateRange,
+  getDailyStats,
+  getDailyStatsRange,
+  getAllTimeStats,
+} from "@/lib/firestore";
 import { useAuthStore } from "@/stores/auth-store";
 import { formatDate } from "@/lib/format";
 
@@ -32,6 +37,16 @@ export function useStatsRange(startDate: string, endDate: string) {
     queryKey: ["dailyStats", uid, startDate, endDate],
     queryFn: () => getDailyStatsRange(uid!, startDate, endDate),
     enabled: !!uid && !!startDate && !!endDate,
+  });
+}
+
+export function useAllTimeStats() {
+  const uid = useAuthStore((s) => s.user?.uid);
+
+  return useQuery({
+    queryKey: ["allTimeStats", uid],
+    queryFn: () => getAllTimeStats(uid!),
+    enabled: !!uid,
   });
 }
 
